@@ -33,7 +33,7 @@ const Home = () => {
     }, []);
 
     return (
-        <div className='flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out'>
+        <div className='flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out dark:bg-stone-900'>
             {/* PC */}
             <div className='hidden md:flex h-screen flex-initial'>
                 <Sidebar user={user && user} />
@@ -41,10 +41,7 @@ const Home = () => {
             {/* Mobile */}
             <div className='"flex md:hidden flex-row"'>
                 <div className="p-2 w-full flex flex-row justify-between items-center shadow-md">
-                    <HiMenu fontSize={40} className="cursor-pointer" onClick={() => setToggleSidebar(true)} />
-                    <Link to="/">
-                        <img src={logo} alt="logo" className="w-20" />
-                    </Link>
+                    <HiMenu fontSize={40} className="cursor-pointer dark:text-slate-50" onClick={() => setToggleSidebar(true)} />
                     <Link to={`user-profile/${user?._id}`}>
                         {user?.image && <img src={(urlFor(user?.image).url())} alt="user-pic" className="w-12 h-12 rounded-full " />}
 
@@ -53,9 +50,9 @@ const Home = () => {
             </div>
 
             {toggleSidebar && (
-                <div className="fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
+                <div className="fixed w-1/3 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
                     <div className="absolute w-full flex justify-end items-center p-2">
-                        <AiFillCloseCircle fontSize={30} className="cursor-pointer" onClick={() => setToggleSidebar(false)} />
+                        <AiFillCloseCircle fontSize={30} className="cursor-pointer dark:text-slate-50" onClick={() => setToggleSidebar(false)} />
                     </div>
                     <Sidebar closeToggle={setToggleSidebar} user={user && user} />
                 </div>

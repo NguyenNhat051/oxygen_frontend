@@ -25,7 +25,7 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
   const alreadySaved = !!(save?.filter((item) => item?.postedBy?._id === user?.sub).length);
 
   const savePost = (id) => {
-    if (!alreadySaved) {
+    if (!alreadySaved && user!=undefined) {
       client
         .patch(id)
         .setIfMissing({ save: [] })
@@ -45,7 +45,7 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
   };
 
   return (
-    <div className="m-2">
+    <div className="m-2 dark:bg-stone-800">
       <div
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
@@ -116,7 +116,7 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
           src={(urlFor(postedBy?.image).url())}
           alt="user-profile"
         />
-        <p className="font-semibold capitalize">{postedBy?.userName}</p>
+        <p className="font-semibold capitalize dark:text-slate-50">{postedBy?.userName}</p>
       </Link>
     </div>
   );

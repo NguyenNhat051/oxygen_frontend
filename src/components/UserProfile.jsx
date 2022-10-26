@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GoogleLogout } from 'react-google-login';
 
 import { userCreatedPostsQuery, userQuery, userSavedPostsQuery } from '../utils/data';
 import { fetchUser } from '../utils/fetchUser';
@@ -21,8 +20,8 @@ const UserProfile = () => {
 
   const User = fetchUser()
 
-  const activeBtnStyles = 'bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none';
-  const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';
+  const activeBtnStyles = 'bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none dark:text-gray-900';
+  const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none dark:bg-stone-700';
 
   useEffect(() => {
     const query = userQuery(userId);
@@ -109,7 +108,7 @@ const UserProfile = () => {
         <div className="relative flex flex-col mb-7">
           <div className="flex flex-col justify-center items-center">
             <img
-              className="w-full h-370 2xl:h-510 shadow-lg object-cover"
+              className="w-full max-h-56 h-auto 2xl:h-510 shadow-lg object-cover"
               src={user.background ? (urlFor(user.background).url()) : "https://source.unsplash.com/1600x900/?nature,photography,technology"}
               alt="user-pic"
             />
@@ -137,7 +136,7 @@ const UserProfile = () => {
             </div>
 
           </div>
-          <h1 className="font-bold text-3xl text-center mt-3">
+          <h1 className="font-bold text-3xl text-center mt-3 dark:text-slate-50">
             {user.userName}
           </h1>
           <div className="absolute top-0 z-1 left-0 p-2 ">
@@ -164,21 +163,13 @@ const UserProfile = () => {
           </div>
           <div className="absolute top-0 z-1 right-0 p-2">
             {User && userId === User.sub && (
-              <GoogleLogout
-                clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
-                render={(renderProps) => (
-                  <button
-                    type="button"
-                    className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none "
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                  >
-                    <AiOutlineLogout color="red" fontSize={21} />
-                  </button>
-                )}
-                onLogoutSuccess={logout}
-                cookiePolicy="single_host_origin"
-              />
+              <button
+                type="button"
+                className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none "
+                onClick={logout}
+              >
+                <AiOutlineLogout color="red" fontSize={25} />
+              </button>
             )}
           </div>
         </div>
@@ -189,7 +180,7 @@ const UserProfile = () => {
               setText(e.target.textContent);
               setActiveBtn('created');
             }}
-            className={`${activeBtn === 'created' ? activeBtnStyles : notActiveBtnStyles}`}
+            className={`${activeBtn === 'created' ? activeBtnStyles : notActiveBtnStyles} dark:text-slate-50`}
           >
             Created
           </button>
@@ -199,7 +190,7 @@ const UserProfile = () => {
               setText(e.target.textContent);
               setActiveBtn('saved');
             }}
-            className={`${activeBtn === 'saved' ? activeBtnStyles : notActiveBtnStyles}`}
+            className={`${activeBtn === 'saved' ? activeBtnStyles : notActiveBtnStyles} dark:text-slate-50`}
           >
             Saved
           </button>
@@ -209,7 +200,7 @@ const UserProfile = () => {
         </div>
 
         {posts?.length === 0 && (
-          <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
+          <div className="flex justify-center font-bold items-center w-full text-1xl mt-2 dark:text-slate-50">
             No Posts Found!
           </div>
         )}

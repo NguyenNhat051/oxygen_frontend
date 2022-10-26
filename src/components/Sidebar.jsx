@@ -12,11 +12,11 @@ const Sidebar = ({ closeToggle, user }) => {
         if (closeToggle) closeToggle(false);
     };
 
-    const isNotActiveStyle = 'flex items-center px-5 gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize';
-    const isActiveStyle = 'flex items-center px-5 gap-3 font-extrabold border-r-2 border-black  transition-all duration-200 ease-in-out capitalize';
+    const isNotActiveStyle = 'flex items-center px-5 gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize dark:text-slate-50';
+    const isActiveStyle = 'flex items-center px-5 gap-3 font-extrabold border-r-2 border-black transition-all duration-200 ease-in-out capitalize dark:text-slate-50 dark:border-white';
 
     return (
-        <div className="flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 scrollbar-hide">
+        <div className="flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 scrollbar-hide dark:bg-stone-800">
             <div className="flex flex-col">
                 <Link
                     to="/"
@@ -24,7 +24,7 @@ const Sidebar = ({ closeToggle, user }) => {
                     onClick={handleCloseSidebar}
                 >
                     <img src={logo} alt="logo" className="w-20" />
-                    <span className='font-bold'>Oxygen</span>
+                    <span className='font-bold dark:text-slate-50'>Oxygen</span>
                 </Link>
                 <div className="flex flex-col gap-5">
                     <NavLink
@@ -32,18 +32,18 @@ const Sidebar = ({ closeToggle, user }) => {
                         className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
                         onClick={handleCloseSidebar}
                     >
-                        <RiHomeFill style={{color: "black", fontSize: "larger"}}/>
+                        <RiHomeFill/>
                         Home
                     </NavLink>
-                    <h3 className="mt-2 px-5 text-base 2xl:text-xl">Discover cateogries</h3>
-                    {categories.slice(0, categories.length).map((category) => (
+                    <h3 className="font-boldmt-2 px-5 text-base 2xl:text-xl dark:text-slate-50">Discover categogries</h3>
+                    {categories.map((category) => (
                         <NavLink
                             to={`/category/${category.name}`}
                             className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
                             onClick={handleCloseSidebar}
                             key={category.name}
                         >
-                            <img src={category.image} alt='category' className="w-8 h-8 rounded-full shadow-sm" />
+                            <img src={category.image} alt='category' className="object-fill w-8 h-8 rounded-full shadow-sm" />
                             {category.name}
                         </NavLink>
                     ))}
@@ -52,11 +52,11 @@ const Sidebar = ({ closeToggle, user }) => {
             {user && (
                 <Link
                     to={`user-profile/${user._id}`}
-                    className="flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3"
+                    className="flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3 dark:bg-stone-800"
                     onClick={handleCloseSidebar}
                 >
                     <img src={(urlFor(user?.image).url())} className="w-10 h-10 rounded-full" alt="user-profile" />
-                    <p>{user.userName}</p>
+                    <p className='font-bold dark:text-slate-50'>{user.userName}</p>
                     <IoIosArrowForward />
                 </Link>
             )}

@@ -33,12 +33,24 @@ const PostDetail = ({ user }) => {
   };
 
   useEffect(() => {
-    fetchPostDetails();
+    const query = postDetailQuery(postId);
+
+    if (query) {
+      client.fetch(`${query}`).then((data) => {
+        setPostDetail(data[0]);
+        if (data[0]) {
+          const query1 = postDetailMorePostQuery(data[0]);
+          client.fetch(query1).then((res) => {
+            setPosts(res);
+          });
+        }
+      });
+    }
   }, [postId]);
 
   if (!postDetail) {
     return (
-      <Spinner message="Showing pin" />
+      <Spinner message="Showing post" />
     );
   }
 
@@ -61,7 +73,7 @@ const PostDetail = ({ user }) => {
 
   return (
     <>
-      <div className="flex xl:flex-row flex-col m-auto bg-white" style={{ maxWidth: '1500px', borderRadius: '32px' }}>
+      <div className="flex xl:flex-row flex-col m-auto mt-5 bg-white dark:bg-stone-800" style={{ maxWidth: '1500px', borderRadius: '32px' }}>
         <div className='flex justify-center items-center md:items-start flex-initial'>
           <img
             className="rounded-t-3xl rounded-b-lg"
@@ -79,25 +91,25 @@ const PostDetail = ({ user }) => {
               >
                 <MdDownloadForOffline />
               </a>
-              <a href={postDetail.destination} target="_blank" rel="noreferrer">
+              <a href={postDetail.destination} target="_blank" rel="noreferrer" className='text-zinc-900 dark: text-slate-50'>
                 {postDetail.destination}
               </a>
             </div>
           </div>
           <div>
-            <h1 className="text-4xl font-bold break-words mt-3">
+            <h1 className="text-4xl font-bold break-words mt-3 dark: text-zinc-900 dark: text-slate-50">
               {postDetail.title}
             </h1>
-            <p className="mt-3">{postDetail.about}</p>
+            <p className="mt-3 text-zinc-900 dark: text-slate-50">{postDetail.about}</p>
           </div>
-          <Link to={`/user-profile/${postDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">
+          <Link to={`/user-profile/${postDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg dark:bg-stone-900 dark:text-slate-50 dark:border-stone-700">
             <img src={(urlFor(postDetail?.postedBy.image).url())} className="w-10 h-10 rounded-full" alt="user-profile" />
             <p className="font-bold">{postDetail?.postedBy.userName}</p>
           </Link>
-          <h2 className="mt-5 text-2xl">Comments</h2>
-          <div className="max-h-370 overflow-y-auto">
+          <h2 className="mt-5 text-2xl dark:text-slate-50">Comments</h2>
+          <div className="max-h-370 overflow-y-auto scrollbar-hide">
             {postDetail?.comments?.map((item) => (
-              <div className="flex gap-2 mt-5 items-center bg-white rounded-lg" key={item.comment}>
+              <div className="flex gap-2 mt-5 items-center bg-white rounded-lg dark:bg-stone-800 dark:text-slate-50 dark:border-stone-700" key={item.comment}>
                 <Link to={`/user-profile/${item?.postedBy._id}`}>
                   <img
                     src={(urlFor(item.postedBy?.image).url())}
@@ -117,7 +129,7 @@ const PostDetail = ({ user }) => {
               <img src={(urlFor(user?.image).url())} className="w-10 h-10 rounded-full cursor-pointer" alt="user-profile" />
             </Link>
             <input
-              className=" flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"
+              className=" flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300 dark:bg-stone-900 dark:text-slate-50 dark:border-stone-700"
               type="text"
               placeholder="Add a comment"
               value={comment}
@@ -125,7 +137,7 @@ const PostDetail = ({ user }) => {
             />
             <button
               type="button"
-              className="bg-red-500 text-white rounded-full px-6 py-2 font-semibold text-base outline-none"
+              className="bg-red-500 text-white rounded-full px-6 py-2 font-semibold text-base outline-none dark:text-stone-900"
               onClick={addComment}
             >
               {addingComment ? 'Posting...' : 'Comment'}
@@ -134,14 +146,14 @@ const PostDetail = ({ user }) => {
         </div>
       </div>
       {posts?.length > 0 && (
-        <h2 className="text-center font-bold text-2xl mt-8 mb-4">
+        <h2 className="text-center font-bold text-2xl mt-8 mb-4 dark:text-slate-50">
           More like this
         </h2>
       )}
       {posts ? (
         <MasonryLayout posts={posts} />
       ) : (
-        <Spinner message="Loading more pins" />
+        <Spinner message="Loading more posts" />
       )}
     </>
   )
