@@ -102,9 +102,9 @@ const PostDetail = ({ user }) => {
             </h1>
             <p className="mt-3 text-zinc-900 dark:text-slate-50">{postDetail.about}</p>
           </div>
-          <Link to={`/user-profile/${postDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg dark:bg-stone-900 dark:text-slate-50 dark:border-stone-700">
+          <Link to={`/user-profile/${postDetail?.postedBy._id}`} className="w-fit flex gap-2 mt-5 items-center bg-white rounded-lg dark:bg-stone-900 dark:text-slate-50 dark:border-stone-700">
             <img src={(urlFor(postDetail?.postedBy.image).url())} className="w-10 h-10 m-2 rounded-full" alt="user-profile" />
-            <p className="font-bold">{postDetail?.postedBy.userName}</p>
+            <p className="font-bold mr-6">{postDetail?.postedBy.userName}</p>
           </Link>
           <h2 className="mt-5 text-2xl dark:text-slate-50">Comments</h2>
           <div className="max-h-64 overflow-y-auto scrollbar-hide">

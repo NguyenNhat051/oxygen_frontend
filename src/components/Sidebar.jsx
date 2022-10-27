@@ -5,9 +5,10 @@ import { IoIosArrowForward } from 'react-icons/io';
 import logo from '../assets/favicon.png';
 import { categories } from '../utils/data';
 import { urlFor } from '../client';
+import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 
-const Sidebar = ({ closeToggle, user }) => {
+const Sidebar = ({ closeToggle, user, isDarkMode, toggleDarkMode }) => {
     const handleCloseSidebar = () => {
         if (closeToggle) closeToggle(false);
     };
@@ -26,15 +27,24 @@ const Sidebar = ({ closeToggle, user }) => {
                     <img src={logo} alt="logo" className="w-20" />
                     <span className='font-bold dark:text-slate-50'>Oxygen</span>
                 </Link>
+
                 <div className="flex flex-col gap-5">
+                    <div className='flex'>
                     <NavLink
                         to="/" end
-                        className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
+                        className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle) +'flex items-center px-5 gap-3 font-extrabold border-r-2 border-black dark:border-white'}
                         onClick={handleCloseSidebar}
                     >
-                        <RiHomeFill/>
+                        <RiHomeFill />
                         Home
+                        
                     </NavLink>
+                    <DarkModeSwitch
+                            onChange={toggleDarkMode}
+                            checked={isDarkMode}
+                            className="ml-2 w-6 h-6"
+                        />
+                    </div>
                     <h3 className="font-bold mt-2 px-5 text-base 2xl:text-xl dark:text-slate-50">Discover categogries</h3>
                     {categories.map((category) => (
                         <NavLink
@@ -52,7 +62,7 @@ const Sidebar = ({ closeToggle, user }) => {
             {user && (
                 <Link
                     to={`user-profile/${user._id}`}
-                    className="flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3 dark:bg-stone-800"
+                    className="flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3 dark:bg-stone-800 dark:text-slate-50"
                     onClick={handleCloseSidebar}
                 >
                     <img src={(urlFor(user?.image).url())} className="w-10 h-10 rounded-full" alt="user-profile" />

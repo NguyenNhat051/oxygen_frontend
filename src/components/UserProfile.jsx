@@ -20,8 +20,8 @@ const UserProfile = () => {
 
   const User = fetchUser()
 
-  const activeBtnStyles = 'bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none dark:text-gray-900';
-  const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none dark:bg-stone-700';
+  const activeBtnStyles = 'bg-red-500 m-2 text-white font-bold p-2 rounded-full w-20 outline-none dark:text-gray-900';
+  const notActiveBtnStyles = 'bg-primary m-2 text-black font-bold p-2 rounded-full w-20 outline-none dark:bg-stone-700';
 
   useEffect(() => {
     const query = userQuery(userId);
@@ -148,7 +148,7 @@ const UserProfile = () => {
                       <p className='bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none'>
                         <AiFillFileImage />
                       </p>
-                      <p className='hidden group-hover:block'>&nbsp; Change Background</p>
+                      <p className='hidden group-hover:block font-bold text-blue-500'>&nbsp; Change Background</p>
                     </div>
                   </div>
                   <input
