@@ -10,7 +10,7 @@ import { fetchUser } from '../utils/fetchUser';
 
 const Post = ({ post: { postedBy, image, _id, title, save } }) => {
   const [postHovered, setPostHovered] = useState(false);
-
+  const [isDisable, setIsDisable] = useState(false);
   const navigate = useNavigate();
 
   const user = fetchUser();
@@ -25,7 +25,8 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
   const alreadySaved = !!(save?.filter((item) => item?.postedBy?._id === user?.sub).length);
 
   const savePost = (id) => {
-    if (!alreadySaved && user!==undefined) {
+    if (!alreadySaved && user?.sub !== undefined) {
+      setIsDisable(true)
       client
         .patch(id)
         .setIfMissing({ save: [] })
@@ -77,6 +78,7 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
                 </button>
               ) : (
                 <button
+                  disabled={isDisable}
                   onClick={(e) => {
                     e.stopPropagation();
                     savePost(_id);

@@ -48,7 +48,7 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
           className="rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center"
         />
         <Link to="/login" className="bg-slate-200 text-white rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center dark:bg-stone-800">
-          <AiOutlineLogin color="red" fontSize={30} />
+          <AiOutlineLogin color="green" fontSize={30} />
         </Link>
 
       </div>}

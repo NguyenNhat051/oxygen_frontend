@@ -92,7 +92,7 @@ const PostDetail = ({ user }) => {
                 <MdDownloadForOffline />
               </a>
               <a href={postDetail.destination} target="_blank" rel="noreferrer" className='ml-2 text-zinc-900 dark:text-slate-50'>
-                <MdOutlineLink size={20}/>
+                <MdOutlineLink size={20} />
               </a>
             </div>
           </div>
@@ -136,6 +136,7 @@ const PostDetail = ({ user }) => {
               onChange={(e) => setComment(e.target.value)}
             />
             <button
+              disabled={addingComment}
               type="button"
               className="bg-red-500 text-white rounded-full px-6 py-2 font-semibold text-base outline-none dark:text-stone-900"
               onClick={addComment}
