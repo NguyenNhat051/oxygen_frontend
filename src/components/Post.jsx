@@ -25,7 +25,7 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
   const alreadySaved = !!(save?.filter((item) => item?.postedBy?._id === user?.sub).length);
 
   const savePost = (id) => {
-    if (!alreadySaved && user!=undefined) {
+    if (!alreadySaved && user!==undefined) {
       client
         .patch(id)
         .setIfMissing({ save: [] })

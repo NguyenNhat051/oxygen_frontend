@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MdDownloadForOffline } from 'react-icons/md';
+import { MdDownloadForOffline, MdOutlineLink } from 'react-icons/md';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -73,10 +73,10 @@ const PostDetail = ({ user }) => {
 
   return (
     <>
-      <div className="flex xl:flex-row flex-col m-auto mt-5 bg-white dark:bg-stone-800" style={{ maxWidth: '1500px', borderRadius: '32px' }}>
+      <div className="flex flex-col m-auto mt-5 bg-white dark:bg-stone-800" style={{ maxWidth: '1500px', borderRadius: '32px' }}>
         <div className='flex justify-center items-center md:items-start flex-initial'>
           <img
-            className="rounded-t-3xl rounded-b-lg"
+            className="rounded-t-3xl rounded-b-lg mt-8"
             src={(postDetail?.image && urlFor(postDetail?.image).url())}
             alt="user-post"
           />
@@ -91,23 +91,23 @@ const PostDetail = ({ user }) => {
               >
                 <MdDownloadForOffline />
               </a>
-              <a href={postDetail.destination} target="_blank" rel="noreferrer" className='text-zinc-900 dark: text-slate-50'>
-                {postDetail.destination}
+              <a href={postDetail.destination} target="_blank" rel="noreferrer" className='ml-2 text-zinc-900 dark:text-slate-50'>
+                <MdOutlineLink size={20}/>
               </a>
             </div>
           </div>
           <div>
-            <h1 className="text-4xl font-bold break-words mt-3 dark: text-zinc-900 dark: text-slate-50">
+            <h1 className="text-4xl font-bold break-words mt-3 dark: text-zinc-900 dark:text-slate-50">
               {postDetail.title}
             </h1>
-            <p className="mt-3 text-zinc-900 dark: text-slate-50">{postDetail.about}</p>
+            <p className="mt-3 text-zinc-900 dark:text-slate-50">{postDetail.about}</p>
           </div>
           <Link to={`/user-profile/${postDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg dark:bg-stone-900 dark:text-slate-50 dark:border-stone-700">
-            <img src={(urlFor(postDetail?.postedBy.image).url())} className="w-10 h-10 rounded-full" alt="user-profile" />
+            <img src={(urlFor(postDetail?.postedBy.image).url())} className="w-10 h-10 m-2 rounded-full" alt="user-profile" />
             <p className="font-bold">{postDetail?.postedBy.userName}</p>
           </Link>
           <h2 className="mt-5 text-2xl dark:text-slate-50">Comments</h2>
-          <div className="max-h-370 overflow-y-auto scrollbar-hide">
+          <div className="max-h-64 overflow-y-auto scrollbar-hide">
             {postDetail?.comments?.map((item) => (
               <div className="flex gap-2 mt-5 items-center bg-white rounded-lg dark:bg-stone-800 dark:text-slate-50 dark:border-stone-700" key={item.comment}>
                 <Link to={`/user-profile/${item?.postedBy._id}`}>

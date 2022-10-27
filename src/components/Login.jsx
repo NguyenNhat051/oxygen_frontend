@@ -27,56 +27,55 @@ const Login = () => {
         return new File([u8arr], filename, { type: mime });
     }
 
-    /* global google */
-    function handleCredentialResponse(response) {
-        let userObject = jwt_decode(response.credential)
-        localStorage.setItem('user', JSON.stringify(userObject));
-
-        const { name, sub, picture } = userObject;
-
-        toDataURL(picture)
-            .then(dataUrl => {
-                //console.log('Here is Base64 Url', dataUrl)
-                let fileData = dataURLtoFile(dataUrl, `${picture}`);
-                //console.log("Here is JavaScript File Object", fileData)
-                client.assets
-                    .upload('image', fileData, { contentType: fileData.type, filename: fileData.name })
-                    .then((document) => {
-                        const doc = {
-                            _id: sub,
-                            _type: 'user',
-                            userName: name,
-                            image: {
-                                _type: 'image',
-                                asset: {
-                                    _type: 'reference',
-                                    _ref: document?._id,
-                                },
-                            },
-                        };
-
-                        client.createIfNotExists(doc)
-                            .then(() => {
-                                navigate('/', { replace: true })
-                            })
-                    })
-                    .catch((error) => {
-                        console.log('Upload failed:', error.message);
-                    });
-
-            })
-    }
 
     useEffect(() => {
         google.accounts.id.initialize({
-            client_id: "472398765980-7h8itd86tveqhaqqhh18u96e46hhmrhm.apps.googleusercontent.com",
-            callback: handleCredentialResponse
+            client_id: "496043103337-70clf0nlj1ho5qkbdrea47dcmgd0ekrb.apps.googleusercontent.com",
+            callback: (response) => {
+                /* global google */
+                let userObject = jwt_decode(response.credential)
+                localStorage.setItem('user', JSON.stringify(userObject));
+
+                const { name, sub, picture } = userObject;
+
+                toDataURL(picture)
+                    .then(dataUrl => {
+                        //console.log('Here is Base64 Url', dataUrl)
+                        let fileData = dataURLtoFile(dataUrl, `${picture}`);
+                        //console.log("Here is JavaScript File Object", fileData)
+                        client.assets
+                            .upload('image', fileData, { contentType: fileData.type, filename: fileData.name })
+                            .then((document) => {
+                                const doc = {
+                                    _id: sub,
+                                    _type: 'user',
+                                    userName: name,
+                                    image: {
+                                        _type: 'image',
+                                        asset: {
+                                            _type: 'reference',
+                                            _ref: document?._id,
+                                        },
+                                    },
+                                };
+
+                                client.createIfNotExists(doc)
+                                    .then(() => {
+                                        navigate('/', { replace: true })
+                                    })
+                            })
+                            .catch((error) => {
+                                console.log('Upload failed:', error.message);
+                            });
+
+                    })
+            }
         });
         google.accounts.id.renderButton(
             document.getElementById("buttonDiv"),
             { theme: "outline", size: "large" }  // customization attributes
         );
-    }, [])
+    }, [navigate])
 
     return (
         <div className='flex justify-start items-center flex-col h-screen'>

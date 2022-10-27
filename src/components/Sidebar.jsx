@@ -35,7 +35,7 @@ const Sidebar = ({ closeToggle, user }) => {
                         <RiHomeFill/>
                         Home
                     </NavLink>
-                    <h3 className="font-boldmt-2 px-5 text-base 2xl:text-xl dark:text-slate-50">Discover categogries</h3>
+                    <h3 className="font-bold mt-2 px-5 text-base 2xl:text-xl dark:text-slate-50">Discover categogries</h3>
                     {categories.map((category) => (
                         <NavLink
                             to={`/category/${category.name}`}

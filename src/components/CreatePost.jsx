@@ -83,7 +83,7 @@ const CreatePost = ({ user }) => {
       {fields && (
         <p className="text-red-500 mb-5 text-xl transition-all duration-150 ease-in ">Please add all fields.</p>
       )}
-      <div className='flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5 w-full dark:bg-stone-800'>
+      <div className='flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 w-full dark:bg-stone-800'>
         <div className='bg-secondaryColor p-3 flex flex-0.7 w-full dark:bg-gray-500'>
           <div className='flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420'>
             {loading && <Spinner />}

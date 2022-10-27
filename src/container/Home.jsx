@@ -8,7 +8,6 @@ import Posts from './Posts';
 import { userQuery } from '../utils/data';
 import { client, urlFor } from '../client'
 import { fetchUser } from '../utils/fetchUser';
-import logo from '../assets/favicon.png';
 
 
 const Home = () => {
@@ -16,17 +15,14 @@ const Home = () => {
     const [toggleSidebar, setToggleSidebar] = useState(false)
     const [user, setUser] = useState();
     const scrollRef = useRef(null);
-
     const userInfo = fetchUser()
-
 
     useEffect(() => {
         const query = userQuery(userInfo?.sub)
-
         client.fetch(query).then((data) => {
             setUser(data[0]);
         });
-    }, [])
+    }, [userInfo?.sub])
 
     useEffect(() => {
         scrollRef.current.scrollTo(0, 0);
