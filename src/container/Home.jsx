@@ -2,39 +2,17 @@ import React, { useState, useRef, useEffect } from 'react';
 import { HiMenu } from 'react-icons/hi';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { Link, Route, Routes } from 'react-router-dom';
-import Alert from 'react-popup-alert'
-import 'react-popup-alert/dist/index.css'
 import { Sidebar, UserProfile } from '../components';
 import Posts from './Posts';
 import { userQuery } from '../utils/data';
 import { client, urlFor } from '../client'
 import { fetchUser } from '../utils/fetchUser';
 
+import { useAlert } from 'react-alert'
+
 
 const Home = () => {
-    /*Popup*/
-    const [alert, setAlert] = React.useState({
-        type: 'error',
-        text: 'This is a alert message',
-        show: false
-    })
-
-    function onCloseAlert() {
-        setAlert({
-            type: '',
-            text: '',
-            show: false
-        })
-    }
-
-    function onShowAlert(type) {
-        setAlert({
-            type: type,
-            text: 'Login to explore more',
-            show: true
-        })
-    }
-    /*EndPopup*/
+    const alert = useAlert()
 
     const [toggleSidebar, setToggleSidebar] = useState(false)
     const [user, setUser] = useState();
@@ -44,11 +22,11 @@ const Home = () => {
     useEffect(() => {
         const query = userQuery(userInfo?.sub)
         client.fetch(query).then((data) => {
-            data[0] === undefined ? onShowAlert('success') :
-                setUser(data[0]);
+            data[0]===undefined?alert.show(<div>You are not logged in. Log in now to discover more</div>):
+            setUser(data[0]);
         });
 
-    }, [userInfo?.sub])
+    }, [userInfo?.sub, alert])
 
     useEffect(() => {
         scrollRef.current.scrollTo(0, 0);
@@ -56,20 +34,6 @@ const Home = () => {
 
     return (
         <div className='flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out dark:bg-stone-900'>
-            <Alert
-                header={'You are not login'}
-                btnText={'Login'}
-                text={alert.text}
-                type={alert.type}
-                show={alert.show}
-                onClosePress={onCloseAlert}
-                pressCloseOnOutsideClick={true}
-                showBorderBottom={true}
-                alertStyles={{}}
-                headerStyles={{margin:'40px'}}
-                textStyles={{}}
-                buttonStyles={{}}
-            />
             {/* PC */}
             <div className='hidden md:flex h-screen flex-initial'>
                 <Sidebar user={user && user} />
