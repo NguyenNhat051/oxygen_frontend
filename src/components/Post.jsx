@@ -11,9 +11,11 @@ import { fetchUser } from '../utils/fetchUser';
 const Post = ({ post: { postedBy, image, _id, title, save } }) => {
   const [postHovered, setPostHovered] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
+
   const navigate = useNavigate();
 
   const user = fetchUser();
+  const [alreadySaved, setalreadySaved] = useState(!!(save?.filter((item) => item?.postedBy?._id === user?.sub).length));
   const deletePost = (id) => {
     client
       .delete(id)
@@ -21,8 +23,6 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
         window.location.reload();
       });
   };
-
-  const alreadySaved = !!(save?.filter((item) => item?.postedBy?._id === user?.sub).length);
 
   const savePost = (id) => {
     if (!alreadySaved && user?.sub !== undefined) {
@@ -40,7 +40,7 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
         }])
         .commit()
         .then(() => {
-          window.location.reload();
+          setalreadySaved(true)
         });
     }
   };
@@ -74,7 +74,7 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
               </div>
               {alreadySaved ? (
                 <button type="button" className="flex bg-green-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none">
-                  {save?.length} &nbsp; <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                  {save?.length} &nbsp; <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16"> <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z" fill="#ffdd00"></path> </svg>
                 </button>
               ) : (
                 <button
