@@ -12,7 +12,7 @@ function Spinner({ message }) {
         className="m-5"
       />
 
-      <p className="mt-5 text-lg font-bold text-center px-2 dark: text-slate-50">{message}</p>
+      <p className="mt-5 text-lg font-bold text-center px-2 dark:text-slate-50">{message}</p>
     </div>
   );
 }

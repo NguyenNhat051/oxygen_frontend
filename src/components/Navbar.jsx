@@ -18,7 +18,7 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
           placeholder="Search"
           value={searchTerm}
           onFocus={() => navigate('/search')}
-          className="p-2 w-full bg-white outline-none dark:bg-stone-800 text-slate-50"
+          className="p-2 w-full bg-white outline-none dark:bg-stone-800 dark:text-slate-50"
         />
       </div>
       {user && <div className="flex gap-3 ">

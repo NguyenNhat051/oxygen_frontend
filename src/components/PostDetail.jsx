@@ -9,9 +9,10 @@ import Spinner from './Spinner';
 
 const PostDetail = ({ user }) => {
   const [posts, setPosts] = useState(null);
-  const [postDetail, setPostDetail] = useState(null);
+  let [postDetail, setPostDetail] = useState(null);
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
+
 
   const scrollRef = useRef(null);
 
@@ -36,7 +37,7 @@ const PostDetail = ({ user }) => {
 
   useEffect(() => {
     const query = postDetailQuery(postId);
-
+    setPostDetail(null)
     if (query) {
       client.fetch(`${query}`).then((data) => {
         setPostDetail(data[0]);
@@ -44,7 +45,7 @@ const PostDetail = ({ user }) => {
           const query1 = postDetailMorePostQuery(data[0]);
           client.fetch(query1).then((res) => {
             setPosts(res);
-            scrollRef.current.scroll({top:0,behavior:'smooth'});
+            scrollRef.current.scroll({ top: 0, behavior: 'fast' });
           });
         }
       });
@@ -73,6 +74,7 @@ const PostDetail = ({ user }) => {
         });
     }
   }
+
 
   return (
     <div className='h-screen overflow-y-scroll scrollbar-hide' ref={scrollRef}>
@@ -162,5 +164,6 @@ const PostDetail = ({ user }) => {
     </div>
   )
 }
+
 
 export default PostDetail
