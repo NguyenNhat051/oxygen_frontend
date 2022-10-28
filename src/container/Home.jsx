@@ -19,6 +19,7 @@ const Home = () => {
 
     const [toggleSidebar, setToggleSidebar] = useState(false)
     const [user, setUser] = useState();
+
     const userInfo = fetchUser()
 
     useEffect(() => {
@@ -56,7 +57,7 @@ const Home = () => {
                         <Sidebar closeToggle={setToggleSidebar} user={user && user} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
                     </div>
                 )}
-                <div className="pb-2 flex-1 h-screen overflow-y-scroll">
+                <div className="pb-2 flex-1 h-screen overflow-y-scroll scrollbar-hide">
                     <Routes>
                         <Route path="/user-profile/:userId" element={<UserProfile />} />
                         <Route path="/*" element={<Posts user={user && user} />} />

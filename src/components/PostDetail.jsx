@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { MdDownloadForOffline, MdOutlineLink } from 'react-icons/md';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,6 +12,8 @@ const PostDetail = ({ user }) => {
   const [postDetail, setPostDetail] = useState(null);
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
+
+  const scrollRef = useRef(null);
 
   const { postId } = useParams();
 
@@ -31,6 +33,7 @@ const PostDetail = ({ user }) => {
     }
   };
 
+
   useEffect(() => {
     const query = postDetailQuery(postId);
 
@@ -41,6 +44,7 @@ const PostDetail = ({ user }) => {
           const query1 = postDetailMorePostQuery(data[0]);
           client.fetch(query1).then((res) => {
             setPosts(res);
+            scrollRef.current.scroll({top:0,behavior:'smooth'});
           });
         }
       });
@@ -71,7 +75,7 @@ const PostDetail = ({ user }) => {
   }
 
   return (
-    <>
+    <div className='h-screen overflow-y-scroll scrollbar-hide' ref={scrollRef}>
       <div className="flex flex-col m-auto mt-5 bg-white dark:bg-stone-800">
         <div className='flex justify-center items-center md:items-start flex-initial'>
           <img
@@ -155,7 +159,7 @@ const PostDetail = ({ user }) => {
       ) : (
         <Spinner message="Loading more posts" />
       )}
-    </>
+    </div>
   )
 }
 
