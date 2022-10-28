@@ -72,7 +72,7 @@ const PostDetail = ({ user }) => {
 
   return (
     <>
-      <div className="flex flex-col m-auto mt-5 bg-white dark:bg-stone-800" style={{ maxWidth: '1500px', borderRadius: '32px' }}>
+      <div className="flex flex-col m-auto mt-5 bg-white dark:bg-stone-800">
         <div className='flex justify-center items-center md:items-start flex-initial'>
           <img
             className="rounded-t-3xl rounded-b-lg mt-8"
