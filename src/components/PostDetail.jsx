@@ -45,7 +45,7 @@ const PostDetail = ({ user }) => {
           const query1 = postDetailMorePostQuery(data[0]);
           client.fetch(query1).then((res) => {
             setPosts(res);
-            scrollRef.current.scroll({ top: 0, behavior: 'fast' });
+            scrollRef.current.scroll({ top: 0, behavior: 'auto' });
           });
         }
       });
@@ -54,7 +54,7 @@ const PostDetail = ({ user }) => {
 
   if (!postDetail) {
     return (
-      <Spinner message="Showing post" />
+      <div ref={scrollRef}><Spinner message="Showing post" /></div>
     );
   }
 
