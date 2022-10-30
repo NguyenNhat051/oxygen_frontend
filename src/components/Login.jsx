@@ -30,7 +30,7 @@ const Login = () => {
 
     useEffect(() => {
         google.accounts.id.initialize({
-            client_id: "398464034858-maqvtiju2j4ugqn9grgpcd7i7mrgd0cq.apps.googleusercontent.com",
+            client_id: "496043103337-70clf0nlj1ho5qkbdrea47dcmgd0ekrb.apps.googleusercontent.com",
             callback: (response) => {
                 /* global google */
                 let userObject = jwt_decode(response.credential)

@@ -8,6 +8,7 @@ import { userQuery } from '../utils/data';
 import { client, urlFor } from '../client'
 import { fetchUser } from '../utils/fetchUser';
 import { useAlert } from 'react-alert'
+import ChatRoom from '../components/ChatRoom';
 
 const Home = () => {
     const alert = useAlert()
@@ -33,6 +34,7 @@ const Home = () => {
 
     return (
         <div className={isDarkMode?'dark':''}>
+            <ChatRoom/>
             <div className='flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out dark:bg-stone-900'>
                 {/* PC */}
                 <div className='hidden md:flex h-screen flex-initial'>

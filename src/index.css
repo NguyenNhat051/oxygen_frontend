@@ -2,10 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    font-family: 'Lato', sans-serif;
+body {
+  font-family: "Lato", sans-serif;
 }
 
-.hide_scrollbar::-webkit-scrollbar{
-    display: none;
+.hide_scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+main::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+main::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+main::-webkit-scrollbar-thumb {
+  background: #6649b8;
 }
