@@ -11,7 +11,7 @@ const login = ()=>{
 
 const options = {
   position: positions.BOTTOM_CENTER,
-  timeout: 0,
+  timeout: 5000,
   type:'info',
   offset: "30px",
   transition: transitions.SCALE, 
