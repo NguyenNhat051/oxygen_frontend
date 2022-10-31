@@ -148,7 +148,7 @@ const UserProfile = () => {
                       <p className='bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none'>
                         <AiFillFileImage />
                       </p>
-                      <p className='hidden group-hover:block font-bold text-blue-500'>&nbsp; Change Background</p>
+                      <p className='hidden group-hover:block font-bold max-w-150 mr-1 ml-1 relative text-center break-words px-2 py-2 text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm self-end'>&nbsp; Change Background</p>
                     </div>
                   </div>
                   <input
