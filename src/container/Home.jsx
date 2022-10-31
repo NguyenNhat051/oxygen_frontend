@@ -26,19 +26,17 @@ const Home = () => {
     useEffect(() => {
         const query = userQuery(userInfo?.sub)
         client.fetch(query).then((data) => {
-            data[0] === undefined ? alert.show(<div>You are not logged in. Log in now to discover more</div>) :
-                setUser(data[0]);
+            data[0] === undefined ? alert.show(<div>You are not logged in. Log in now to discover more</div>) : setUser(data[0]);
         });
-
     }, [userInfo?.sub, alert])
 
     return (
-        <div className={isDarkMode?'dark':''}>
-            
+        <div className={isDarkMode ? 'dark' : ''}>
+
             <div className='flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out dark:bg-stone-900'>
                 {/* PC */}
                 <div className='hidden md:flex h-screen flex-initial'>
-                    <Sidebar user={user && user} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/>
+                    <Sidebar user={user && user} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
                 </div>
                 {/* Mobile */}
                 <div className='"flex md:hidden flex-row"'>
