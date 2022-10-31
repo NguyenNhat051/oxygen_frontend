@@ -50,6 +50,9 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
       <div
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
+        onTouchStartCapture={() => setPostHovered(true)}
+        onTouchEndCapture={() => setPostHovered(false)}
+
         onClick={() => navigate(`/post-detail/${_id}`)}
         className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
