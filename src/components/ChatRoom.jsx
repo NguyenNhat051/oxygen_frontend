@@ -2,10 +2,11 @@ import React from 'react'
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import { fetchUser } from '../utils/fetchUser';
-import { useState,useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import ChatMessage from "./ChatMessages"
+import { urlFor } from '../client';
 
 firebase.initializeApp({
     apiKey: `${process.env.FIRE_BASE_API_KEY}`,
@@ -18,7 +19,7 @@ firebase.initializeApp({
 
 const firestore = firebase.firestore();
 
-const ChatRoom = ({ setShowChat }) => {
+const ChatRoom = ({ setShowChat, user }) => {
     //const firestore = useRef(firebase.firestore());
     const messagesRef = firestore.collection('messages');
     const query = messagesRef.orderBy('createdAt').limit(25);
@@ -32,7 +33,9 @@ const ChatRoom = ({ setShowChat }) => {
     const sendMessage = async (e) => {
         e.preventDefault();
 
-        const { sub, picture } = userInfo;
+        const { sub } = userInfo;
+        const picture = (urlFor(user?.image).url())
+
 
         await messagesRef.add({
             text: formValue,
@@ -48,14 +51,14 @@ const ChatRoom = ({ setShowChat }) => {
 
     useEffect(() => {
         dummy.current.scrollTo({ top: 1000, behavior: 'smooth' });
-      }, [messages])
-    
+    }, [messages])
+
 
     return (
         <div className='mx-2 fixed bottom-0 right-2 z-10'>
             <p className='w-96 bg-slate-200 text-stone-900 flex items-center justify-between p-2 box-border font-bold'>
                 Oxygen Chat Room For Everyone
-                <button onClick={()=>setShowChat(false)} className="bg-transparent hover:bg-slate-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                <button onClick={() => setShowChat(false)} className="bg-transparent hover:bg-slate-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </p>
 
             <div className='flex flex-col justify-center bg-slate-50 dark:bg-zinc-700' >

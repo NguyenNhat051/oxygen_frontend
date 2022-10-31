@@ -44,7 +44,6 @@ const Home = () => {
                         <HiMenu fontSize={40} className="cursor-pointer dark:text-slate-50" onClick={() => setToggleSidebar(true)} />
                         <Link to={`user-profile/${user?._id}`}>
                             {user?.image && <img src={(urlFor(user?.image).url())} alt="user-pic" className="w-12 h-12 rounded-full " />}
-
                         </Link>
                     </div>
                 </div>
