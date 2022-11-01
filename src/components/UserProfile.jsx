@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -18,7 +18,12 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
 
-  const User = fetchUser()
+  const userInfo = useRef(null);
+    useEffect(() => {
+        if(userInfo.current === null) {
+            userInfo.current = fetchUser();
+        }
+    })
 
   const activeBtnStyles = 'bg-red-500 m-2 text-white font-bold p-2 rounded-full w-20 outline-none dark:text-gray-900';
   const notActiveBtnStyles = 'bg-primary m-2 text-black font-bold p-2 rounded-full w-20 outline-none dark:bg-stone-700';
@@ -119,7 +124,7 @@ const UserProfile = () => {
                 alt="user-pic"
               />
               {
-                User && User?.sub === user?._id && (
+                userInfo.current && userInfo.current?.sub === user?._id && (
                   <label className='hidden group-hover:block absolute'>
                     <p className='bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none'>
                       <AiFillFileImage />
@@ -141,7 +146,7 @@ const UserProfile = () => {
           </h1>
           <div className="absolute top-0 z-1 left-0 p-2 ">
             {
-              User && User?.sub === user?._id && (
+              userInfo.current && userInfo.current?.sub === user?._id && (
                 <label>
                   <div className='flex flex-col items-center justify-center h-full'>
                     <div className='group flex justify-center items-center'>
@@ -162,7 +167,7 @@ const UserProfile = () => {
             }
           </div>
           <div className="absolute top-0 z-1 right-0 p-2">
-            {User && userId === User.sub && (
+            {userInfo.current && userId === userInfo.current.sub && (
               <button
                 type="button"
                 className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none "

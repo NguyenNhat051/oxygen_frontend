@@ -24,7 +24,13 @@ const ChatRoom = ({ setShowChat, user }) => {
     const messagesRef = firestore.collection('messages');
     const query = messagesRef.orderBy('createdAt').limit(25);
 
-    const userInfo = fetchUser()
+    const userInfo = useRef(null);
+    useEffect(() => {
+        if(userInfo.current === null) {
+            userInfo.current = fetchUser();
+        }
+    })
+
     const dummy = useRef();
 
     const [messages] = useCollectionData(query, { idField: 'id' });
@@ -32,19 +38,20 @@ const ChatRoom = ({ setShowChat, user }) => {
 
     const sendMessage = async (e) => {
         e.preventDefault();
+        const textValue = formValue;
+        setFormValue('');
 
-        const { sub } = userInfo;
+        const { sub } = userInfo.current;
         const picture = (urlFor(user?.image).url())
 
 
         await messagesRef.add({
-            text: formValue,
+            text: textValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             sub,
             picture
         })
-
-        setFormValue('');
+        
         dummy.current.scrollTo({ top: 1000, behavior: 'smooth' });
     }
 
@@ -63,10 +70,10 @@ const ChatRoom = ({ setShowChat, user }) => {
 
             <div className='flex flex-col justify-center bg-slate-50 dark:bg-zinc-700' >
                 <main className='p-2 overflow-y-scroll flex flex-col h-[40vh]' ref={dummy}>
-                    {messages && messages.map(msg => <ChatMessage key={msg.createdAt} message={msg} user={userInfo} />)}
+                    {messages && messages.map(msg => <ChatMessage key={msg.createdAt} message={msg} user={userInfo.current} />)}
                 </main>
 
-                {userInfo ?
+                {userInfo.current ?
                     <form className='flex mb-2' onSubmit={sendMessage}>
                         <textarea value={formValue} onChange={(e) => setFormValue(e.target.value)} rows="1" className="w-80 scrollbar-hide resize-none block mx-4 pt-3 px-2 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
                         <button type="submit" disabled={!formValue} className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">

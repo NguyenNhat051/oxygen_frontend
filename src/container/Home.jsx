@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { HiMenu } from 'react-icons/hi';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { Link, Route, Routes } from 'react-router-dom';
@@ -21,14 +21,19 @@ const Home = () => {
     const [toggleSidebar, setToggleSidebar] = useState(false)
     const [user, setUser] = useState();
 
-    const userInfo = fetchUser()
+    const userInfo = useRef(null);
+    useEffect(() => {
+        if(userInfo.current === null) {
+            userInfo.current = fetchUser();
+        }
+    })
 
     useEffect(() => {
-        const query = userQuery(userInfo?.sub)
+        const query = userQuery(userInfo.current?.sub)
         client.fetch(query).then((data) => {
             data[0] === undefined ? alert.show(<div>You are not logged in. Log in now to discover more</div>) : setUser(data[0]);
         });
-    }, [userInfo?.sub, alert])
+    }, [userInfo.current?.sub, alert])
 
     return (
         <div className={isDarkMode ? 'dark' : ''}>
