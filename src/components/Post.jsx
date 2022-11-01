@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { MdDownloadForOffline } from 'react-icons/md';
@@ -14,14 +14,11 @@ const Post = ({ post: { postedBy, image, _id, title, save } }) => {
 
   const navigate = useNavigate();
 
-  const userInfo = useRef(null);
-  useEffect(() => {
-    if (userInfo.current === null) {
-      userInfo.current = fetchUser();
-    }
-  })
+  const userInfo = useRef(fetchUser());
 
   const [alreadySaved, setalreadySaved] = useState(!!(save?.filter((item) => item?.postedBy?._id === userInfo.current?.sub).length));
+
+
   const deletePost = (id) => {
     client
       .delete(id)

@@ -24,12 +24,7 @@ const ChatRoom = ({ setShowChat, user }) => {
     const messagesRef = firestore.collection('messages');
     const query = messagesRef.orderBy('createdAt').limit(25);
 
-    const userInfo = useRef(null);
-    useEffect(() => {
-        if(userInfo.current === null) {
-            userInfo.current = fetchUser();
-        }
-    })
+    const userInfo = useRef(fetchUser());
 
     const dummy = useRef();
 
@@ -51,7 +46,7 @@ const ChatRoom = ({ setShowChat, user }) => {
             sub,
             picture
         })
-        
+
         dummy.current.scrollTo({ top: 1000, behavior: 'smooth' });
     }
 

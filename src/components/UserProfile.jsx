@@ -18,12 +18,7 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
 
-  const userInfo = useRef(null);
-    useEffect(() => {
-        if(userInfo.current === null) {
-            userInfo.current = fetchUser();
-        }
-    })
+  const userInfo = useRef(fetchUser());
 
   const activeBtnStyles = 'bg-red-500 m-2 text-white font-bold p-2 rounded-full w-20 outline-none dark:text-gray-900';
   const notActiveBtnStyles = 'bg-primary m-2 text-black font-bold p-2 rounded-full w-20 outline-none dark:bg-stone-700';

@@ -21,12 +21,7 @@ const Home = () => {
     const [toggleSidebar, setToggleSidebar] = useState(false)
     const [user, setUser] = useState();
 
-    const userInfo = useRef(null);
-    useEffect(() => {
-        if(userInfo.current === null) {
-            userInfo.current = fetchUser();
-        }
-    })
+    const userInfo = useRef(fetchUser());
 
     useEffect(() => {
         const query = userQuery(userInfo.current?.sub)
