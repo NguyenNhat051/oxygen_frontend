@@ -220,6 +220,7 @@ export const userSavedPostsQuery = (userId) => {
           }
         },
         _id,
+        title,
         destination,
         postedBy->{
           _id,
